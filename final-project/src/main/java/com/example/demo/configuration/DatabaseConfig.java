@@ -1,4 +1,4 @@
-package com.example.demo.model.configuration;
+package com.example.demo.configuration;
 
 
 import jakarta.persistence.EntityManagerFactory;
@@ -24,7 +24,7 @@ public class DatabaseConfig {
     public DataSource getDataSource(){
         DataSourceBuilder dataSourceBuilder = DataSourceBuilder.create();
         dataSourceBuilder.driverClassName("com.mysql.cj.jdbc.Driver");
-        dataSourceBuilder.url("jdbc://localhost:3306/messages");
+        dataSourceBuilder.url("jdbc:mysql://localhost:3306/messages");
         dataSourceBuilder.username("root");
         dataSourceBuilder.password("Saman1382!");
         return dataSourceBuilder.build();
@@ -36,11 +36,12 @@ public class DatabaseConfig {
 
         HibernateJpaVendorAdapter vendorAdapter = new HibernateJpaVendorAdapter();
         vendorAdapter.setGenerateDdl(true);
-
         LocalContainerEntityManagerFactoryBean factory = new LocalContainerEntityManagerFactoryBean();
         factory.setJpaVendorAdapter(vendorAdapter);
-        factory.setPackagesToScan("com.acme.domain");
+        factory.setPackagesToScan("com.example.demo.model");
         factory.setDataSource(getDataSource());
+        factory.setPersistenceUnitName("hibernateOrm");
+        
         return factory;
     }
 
