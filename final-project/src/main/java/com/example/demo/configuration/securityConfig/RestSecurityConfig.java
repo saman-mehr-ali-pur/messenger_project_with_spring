@@ -51,7 +51,8 @@ public class RestSecurityConfig {
                         requestMatchers(HttpMethod.POST,"/user/get").permitAll()
                         .requestMatchers(HttpMethod.OPTIONS,"/user/get").permitAll()
                         .requestMatchers(HttpMethod.OPTIONS,"/room/all_rooms").permitAll()
-                        .requestMatchers(HttpMethod.POST,"/room/all_rooms").permitAll()
+                        .requestMatchers(HttpMethod.POST,"/room/all_rooms").permitAll().
+                        requestMatchers(HttpMethod.GET,"/user/check_username/**").permitAll()
                         .anyRequest().authenticated()
                 )
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))

@@ -2,11 +2,13 @@ package com.example.demo.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Email;
 import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.ColumnDefault;
+import org.hibernate.annotations.processing.Pattern;
 
 import java.util.List;
 
@@ -19,6 +21,9 @@ public class User {
     private Long id;
     @Column(nullable = false,unique = true)
     private String username;
+    @Column(nullable = false)
+    @Email
+    private String email;
     @Column(nullable = false)
     private String password;
     @Column(nullable = false)
@@ -110,6 +115,14 @@ public class User {
 
     public void setRole(String role) {
         this.role = role;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 }
 

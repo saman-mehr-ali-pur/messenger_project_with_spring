@@ -55,4 +55,10 @@ public class UserSservice {
         return result;
     }
 
+
+    public boolean isExist(String username){
+        List<User> result = userRepo.findByUsername(username);
+        return !result.isEmpty();
+    }
+
 }
