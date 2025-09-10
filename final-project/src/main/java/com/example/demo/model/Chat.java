@@ -12,7 +12,7 @@ import java.util.Date;
 
 @NoArgsConstructor
 @Entity
-
+@Data
 public class Chat {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -33,7 +33,6 @@ public class Chat {
     private String mediaPath;
 
 
-    public Chat(){}
     public Chat(Chat chat) {
         this.id = chat.id;
         this.message = chat.message;
@@ -49,61 +48,4 @@ public class Chat {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "chat_room")
     private ChatRoom room;
-
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public void setMessage(String message) {
-        this.message = message;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
-    }
-
-    public void setType(ChatType type) {
-        this.type = type;
-    }
-
-    public void setDate(Date date) {
-        this.date = date;
-    }
-
-    public void setMediaPath(String mediaPath) {
-        this.mediaPath = mediaPath;
-    }
-
-    public void setRoom(ChatRoom room) {
-        this.room = room;
-    }
-
-    public Integer getId() {
-        return id;
-    }
-
-    public String getMessage() {
-        return message;
-    }
-
-    public User getUser() {
-        return user;
-    }
-
-    public ChatType getType() {
-        return type;
-    }
-
-    public Date getDate() {
-        return date;
-    }
-
-    public String getMediaPath() {
-        return mediaPath;
-    }
-
-    public ChatRoom getRoom() {
-        return room;
-    }
 }

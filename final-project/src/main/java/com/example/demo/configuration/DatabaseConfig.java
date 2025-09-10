@@ -24,7 +24,7 @@ public class DatabaseConfig {
     public DataSource getDataSource(){
         DataSourceBuilder dataSourceBuilder = DataSourceBuilder.create();
         dataSourceBuilder.driverClassName("com.mysql.cj.jdbc.Driver");
-        dataSourceBuilder.url("jdbc:mysql://localhost:3306/messages");
+        dataSourceBuilder.url("jdbc:mysql://localhost:3306/Messages");
         dataSourceBuilder.username("root");
         dataSourceBuilder.password("Saman1382!");
         return dataSourceBuilder.build();

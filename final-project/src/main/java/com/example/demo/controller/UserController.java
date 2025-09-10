@@ -57,6 +57,11 @@ public class UserController {
         return ResponseEntity.status(HttpStatus.FOUND).body(true);
     }
 
+    @PostMapping("/search")
+    public List<User> search(@RequestBody User user){
+        return userSservices.searchUsername(user);
+    }
+
 //
 //    @GetMapping("/check_username/{username}")
 //    public boolean checkUsername(@PathVariable("username") String username){

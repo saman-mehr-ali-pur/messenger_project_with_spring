@@ -14,8 +14,10 @@ public interface ChatRoomRepo extends JpaRepository<ChatRoom,Integer> {
     ChatRoom save(ChatRoom room);
     List<ChatRoom> findAll();
     Optional<ChatRoom> findById(int id);
-    @Query("SELECT cr FROM ChatRoom cr INNER JOIN FETCH cr.members u WHERE cr.id =:chatRoomId")
-    List<ChatRoom> findByUser(@Param("chatRoomId") Long chatRoomId);
+    @Query("SELECT c FROM ChatRoom c JOIN c.members m WHERE m.id = :userId")
+    List<ChatRoom> findAllByUserId(@Param("userId") Long userId);
+
+    ChatRoom findByRoomName(String roomName);
 
 
 }

@@ -53,6 +53,12 @@ public class RestSecurityConfig {
                         .requestMatchers(HttpMethod.OPTIONS,"/room/all_rooms").permitAll()
                         .requestMatchers(HttpMethod.POST,"/room/all_rooms").permitAll().
                         requestMatchers(HttpMethod.GET,"/user/check_username/**").permitAll()
+                        .requestMatchers(HttpMethod.GET,"/room/find/**").permitAll()
+                        .requestMatchers(HttpMethod.OPTIONS,"/room/find/**").permitAll()
+                        .requestMatchers(HttpMethod.POST,"/user/search").permitAll()
+                        .requestMatchers(HttpMethod.OPTIONS,"/user/search").permitAll()
+
+
                         .anyRequest().authenticated()
                 )
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))

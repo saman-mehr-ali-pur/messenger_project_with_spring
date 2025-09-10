@@ -61,4 +61,9 @@ public class UserSservice {
         return !result.isEmpty();
     }
 
+
+    public List<User> searchUsername(User user){
+        return userRepo.findByUsername(user.getUsername());
+    }
+
 }

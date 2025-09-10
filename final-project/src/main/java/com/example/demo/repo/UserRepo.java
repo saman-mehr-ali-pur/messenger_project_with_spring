@@ -1,5 +1,6 @@
 package com.example.demo.repo;
 
+import com.example.demo.model.ChatRoom;
 import com.example.demo.model.User;
 import org.springframework.data.domain.Page;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -18,5 +19,7 @@ public interface UserRepo extends JpaRepository<User,Integer> {
     Optional<User> findByUsernameAndPassword(String username,String password);
     Optional<User> findById(Integer id);
     User save(User user);
+
+//    List<ChatRoom> findAllChatRooms();
 
 }

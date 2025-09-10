@@ -13,6 +13,8 @@ import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.messaging.simp.annotation.SubscribeMapping;
+import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 
 import java.util.Date;
@@ -27,7 +29,7 @@ public class MessageController {
 
 
     @MessageMapping("/message")
-    @SendTo("/topic/chat")
+    @SendTo("/topic/chat/")
     public Chat messageController(@Payload String payload) throws JsonProcessingException, InterruptedException {
         ObjectMapper objectMapper = new ObjectMapper();
         JsonNode node = objectMapper.readTree(payload);

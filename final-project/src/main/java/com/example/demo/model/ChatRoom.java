@@ -2,6 +2,7 @@ package com.example.demo.model;
 
 import com.example.demo.model.enums.RoomType;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -14,6 +15,7 @@ public class ChatRoom {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
+    @JsonProperty("name")
     @Column(nullable = false)
     private String roomName;
     @Enumerated(EnumType.STRING)
