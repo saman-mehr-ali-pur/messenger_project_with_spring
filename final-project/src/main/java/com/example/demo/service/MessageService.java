@@ -7,6 +7,7 @@ import com.example.demo.model.enums.RoomType;
 import com.example.demo.repo.ChatRepo;
 import com.example.demo.repo.ChatRoomRepo;
 import com.example.demo.repo.UserRepo;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -66,6 +67,16 @@ public class MessageService {
 
     }
 
+    @Transactional
+    public Boolean delete(Integer id,String username) {
 
+        Chat chat = chatRepo.findById(id).orElse(null);
+        System.out.println("chat ot delete " +chat.getMessage());
+        if (chat!=null && chat.getUser().getUsername().equals(username)){
+            chatRepo.delete(chat);
+            return true;
+        }
+        return false;
 
+    }
 }

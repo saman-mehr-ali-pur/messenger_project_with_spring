@@ -3,7 +3,7 @@ package com.example.demo.dto;
 public class DeleteResp {
     private Integer id;
     private boolean status;
-
+    private String op = "delete";
     public Integer getId() {
         return id;
     }
@@ -18,5 +18,13 @@ public class DeleteResp {
 
     public void setStatus(boolean status) {
         this.status = status;
+    }
+
+    public String getOp() {
+        return op;
+    }
+
+    public void setOp(String op) {
+        this.op = op;
     }
 }

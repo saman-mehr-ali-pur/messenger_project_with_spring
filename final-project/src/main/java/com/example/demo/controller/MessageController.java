@@ -81,12 +81,17 @@ public class MessageController {
 
 
     @MessageMapping("/delete")
-    public DeleteResp deleteMessage(@Payload String message) throws JsonProcessingException {
-
-        System.out.println(message);
+    public void deleteMessage(@Payload String message) throws JsonProcessingException {
+        System.out.println("delete : "+message);
+        ObjectMapper objectMapper = new ObjectMapper();
+        JsonNode node = objectMapper.readTree(message);
+        String username = node.path("username").asText();
+        Integer id = node.path("id").asInt();
+        boolean result = messageService.delete(id,username);
         DeleteResp resp = new DeleteResp();
-        resp.setStatus(true);
-        return resp;
+        resp.setStatus(result);
+        resp.setId(id);
+        messagingTemplate.convertAndSend("/topic/chat/"+username,resp);
     }
 
     @SubscribeMapping("/sub")
