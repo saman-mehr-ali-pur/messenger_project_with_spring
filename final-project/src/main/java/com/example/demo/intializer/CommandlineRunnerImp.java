@@ -29,8 +29,8 @@ public class CommandlineRunnerImp implements CommandLineRunner {
            user.setPassword("1234567");
            user.setPassword("admin init");
            user.setRole("ADMIN");
-           user.setFName("admin1");
-           user.setLName("admin1");
+           user.setFirstName("admin1");
+           user.setLastName("admin1");
            user.setEnable(true);
            user.setEmail("admin@admin.com");
 

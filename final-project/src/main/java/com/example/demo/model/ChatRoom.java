@@ -9,6 +9,7 @@ import lombok.NoArgsConstructor;
 
 import java.util.List;
 
+@Data
 @NoArgsConstructor
 @Entity
 public class ChatRoom {
@@ -16,14 +17,28 @@ public class ChatRoom {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
     @JsonProperty("name")
-    @Column(nullable = false)
+    @Column(nullable = true)
     private String roomName;
     @Enumerated(EnumType.STRING)
     private RoomType type;
-    @ManyToMany(fetch = FetchType.LAZY)
+    @ManyToMany(fetch = FetchType.EAGER)
         @JoinTable(name = "room_user")
     private List<User> members;
 
-    @OneToMany(mappedBy = "room",fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "room",fetch = FetchType.EAGER)
     private List<Chat> chats;
+
+
+    public void sortChatsBytime(){
+        this.chats.sort(((o1, o2) -> o1.getDate().compareTo(o2.getDate())));
+    }
+
+    public void setIsSent(Integer id){
+        chats.stream().forEach((Chat item) -> {
+            if (item.getId().equals(id)){
+                item.setSent(true);
+            }
+            else item.setSent(false);
+        });
+    }
 }

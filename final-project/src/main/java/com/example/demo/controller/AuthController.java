@@ -5,12 +5,11 @@ import com.example.demo.dto.AuthDto;
 import com.example.demo.jwt.JwtService;
 import com.example.demo.model.User;
 import com.example.demo.model.UserDetailsImp;
-import com.example.demo.service.UserSservice;
+import com.example.demo.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseCookie;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
@@ -21,13 +20,14 @@ import java.util.Map;
 public class AuthController {
 
     @Autowired
-    private UserSservice userSservice;
+    private UserService userSservice;
     @Autowired
     private JwtService jwtService;
 
 
 //    @CrossOrigin(origins = "*")
     @PostMapping
+//    @CrossOrigin("localhost:5173")
     public ResponseEntity<AuthDto> doAuth(@RequestBody User user){
 
 //        System.out.println(user.getUsername()+" "+user.getPassword());

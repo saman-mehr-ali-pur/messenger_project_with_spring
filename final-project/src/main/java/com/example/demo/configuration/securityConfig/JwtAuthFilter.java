@@ -1,14 +1,12 @@
 package com.example.demo.configuration.securityConfig;
-
 import com.example.demo.jwt.JwtService;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import lombok.extern.slf4j.Slf4j;
-import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -19,46 +17,67 @@ import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
 
-    @Component
-    public class JwtAuthFilter extends OncePerRequestFilter {
+@Component
+public class JwtAuthFilter extends OncePerRequestFilter {
 
-        @Autowired
-        private UserDetailsService userDetailsService;
-        @Autowired
-        private JwtService jwtService;
-        @Override
-        protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
-            String authHeader = request.getHeader(HttpHeaders.COOKIE);
-            final String userEmail;
-            final String jwtToken;
-            final String url = request.getRequestURL().toString();
+    @Autowired
+    private UserDetailsService userDetailsService;
+    @Autowired
+    private JwtService jwtService;
 
-            if (url.equals("http://localhost:8080/auth") && request.getMethod().equals( "POST")){
-                filterChain.doFilter(request, response);
-                return;
-            }
-
-
-            if (authHeader == null || !authHeader.startsWith("Authorization=")) {
-                filterChain.doFilter(request, response);
-                return;
-            }
-
-            jwtToken = authHeader.substring(14);
-            userEmail = jwtService.extractUsername(jwtToken);
-
-            if (userEmail != null && SecurityContextHolder.getContext().getAuthentication() == null) {
-                UserDetails userDetails = this.userDetailsService.loadUserByUsername(userEmail);
-                if (jwtService.isTokenValid(jwtToken, userDetails)) {
-                    UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(
-                            userDetails,
-                            null,
-                            userDetails.getAuthorities()
-                    );
-                    authToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
-                    SecurityContextHolder.getContext().setAuthentication(authToken);
-                }
-            }
-            filterChain.doFilter(request, response);
+    @Override
+    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
+        final String authCooki = request.getHeader(HttpHeaders.COOKIE);
+        String jwtToken;
+        String userEmail;
+        String authrizaion = request.getHeader("Authorization") ;
+        System.out.println("method: "+request.getMethod());
+        System.out.println(request.getRequestURI()+" "+authrizaion);
+        // Bypass authentication for the login endpoint
+        if (request.getMethod().equals(HttpMethod.OPTIONS.name())){
+            filterChain.doFilter(request,response);
+            return;
         }
+        if ((request.getRequestURI().startsWith("/auth") || request.getRequestURI().startsWith("/user/save")) && request.getMethod().equals("POST")) {
+            System.out.println("do auth");
+            filterChain.doFilter(request, response);
+            return;
+        }
+
+
+
+        if (authrizaion == null && authCooki == null) {
+            response.setStatus(401);
+            filterChain .doFilter(request, response);
+            return;}
+        else if (authrizaion!=null)
+            jwtToken = authrizaion;
+        else
+            jwtToken = authCooki.split("=")[1];
+
+        // Extract the username (subject) from the token
+        userEmail = jwtService.extractUsername(jwtToken);
+
+        // If the username is valid and the user is not yet authenticated
+        if (userEmail != null && SecurityContextHolder.getContext().getAuthentication() == null) {
+            // Load user details from the database
+            UserDetails userDetails = this.userDetailsService.loadUserByUsername(userEmail);
+
+            // Validate the token
+            if (jwtService.isTokenValid(jwtToken, userDetails)) {
+                // Create an authentication token
+                UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(
+                        userDetails.getUsername(),
+                        null,
+                        userDetails.getAuthorities()
+                );
+                authToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
+
+                // Set the authentication in the SecurityContext
+                SecurityContextHolder.getContext().setAuthentication(authToken);
+            }
+        }
+
+        filterChain.doFilter(request, response);
     }
+}

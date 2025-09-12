@@ -26,11 +26,14 @@ public class Chat {
     @Column(name = "type")
     private ChatType type;
     @Column(name = "send_time")
-    @Temporal(TemporalType.DATE)
+    @Temporal(TemporalType.TIMESTAMP)
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy hh:mm:ss a",timezone = "Asia/Tehran")
     private Date date;
     @Column
     private String mediaPath;
+
+    @Transient
+    private boolean isSent;
 
 
     public Chat(Chat chat) {

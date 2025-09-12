@@ -27,9 +27,9 @@ public class User {
     @Column(nullable = false)
     private String password;
     @Column(nullable = false)
-    private String fName;
+    private String firstName;
     @Column(nullable = false)
-    private String lName;
+    private String lastName;
     @Column(name = "Role",nullable = false)
     private String role;
     @Column(length = 100)
@@ -37,11 +37,11 @@ public class User {
     @Column(nullable = false)
     @ColumnDefault("false")
     private Boolean Enable=false;
-    @ManyToMany(mappedBy = "members",fetch = FetchType.LAZY)
-    @JsonIgnore
-    private List<ChatRoom> ChatRoom;
+//    @ManyToMany(mappedBy = "members",fetch = FetchType.LAZY)
+//    @JsonIgnore
+//    private List<ChatRoom> ChatRoom;
 
-    @ElementCollection(targetClass = String.class,fetch = FetchType.LAZY)
+    @ElementCollection(targetClass = String.class,fetch = FetchType.EAGER)
     @CollectionTable(name = "profiles",joinColumns = @JoinColumn(name = "user_id"))
     @Column(name = "path", nullable = true)
         private List<String> profilePaths;

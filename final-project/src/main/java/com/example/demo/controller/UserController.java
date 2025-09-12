@@ -1,16 +1,17 @@
 package com.example.demo.controller;
 
 
-import com.example.demo.exception.NotFoundException;
 import com.example.demo.model.User;
-import com.example.demo.service.UserSservice;
+import com.example.demo.model.UserDetailsImp;
+import com.example.demo.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.Principal;
 import java.util.List;
 
 @RestController
@@ -18,7 +19,7 @@ import java.util.List;
 public class UserController {
 
     @Autowired
-    private UserSservice userSservices;
+    private UserService userSservices;
 
 //    @CrossOrigin(origins = "*")
     @PostMapping("/save")
@@ -26,8 +27,28 @@ public class UserController {
         user.setEnable(false);
         user.setRole("USER");
 
+        System.out.println(user);
+
 
         return  userSservices.saveUser(user);
+    }
+
+    @GetMapping("/getUsername")
+    public String getUsername() {
+        // Get the principal from the SecurityContext
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
+        // Check if the principal is a UserDetails object
+        if (principal instanceof UserDetails) {
+            UserDetails userDetails = (UserDetails) principal;
+            return userDetails.getUsername(); // Return the username from the UserDetails object
+        } else if (principal instanceof String) {
+            // This case handles the "anonymousUser" or other String principals
+            return (String) principal;
+        }
+
+        // Handle cases where the principal is not a UserDetails or String
+        return "Not Authenticated or Principal Type Unknown";
     }
 
     @PostMapping("/get")

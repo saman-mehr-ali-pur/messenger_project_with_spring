@@ -5,17 +5,13 @@ import com.example.demo.repo.UserRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.beans.Encoder;
 import java.util.List;
-import java.util.Optional;
 
 @Service
-public class UserSservice {
+public class UserService {
 
     @Autowired
     private UserRepo userRepo;
@@ -47,6 +43,15 @@ public class UserSservice {
 
 
         return null;
+    }
+
+
+    public User findByUsername(String username){
+        List<User> result = userRepo.findByUsername(username);
+        if (!result.isEmpty()){
+            return result.get(0);
+        }
+        else return null;
     }
 
 

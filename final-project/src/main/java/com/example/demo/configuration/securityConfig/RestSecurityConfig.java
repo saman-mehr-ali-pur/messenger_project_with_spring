@@ -56,7 +56,11 @@ public class RestSecurityConfig {
                         .requestMatchers(HttpMethod.GET,"/room/find/**").permitAll()
                         .requestMatchers(HttpMethod.OPTIONS,"/room/find/**").permitAll()
                         .requestMatchers(HttpMethod.POST,"/user/search").permitAll()
-                        .requestMatchers(HttpMethod.OPTIONS,"/user/search").permitAll()
+                        .requestMatchers(HttpMethod.OPTIONS,"/user/search").permitAll().
+                        requestMatchers(HttpMethod.OPTIONS,"/user/getUsername").permitAll()
+                        .requestMatchers(HttpMethod.GET,"/user/getUsername").permitAll().
+                        requestMatchers(HttpMethod.OPTIONS,"/messages-rest/get/**").permitAll().
+                        requestMatchers(HttpMethod.GET,"/messages-rest/get/**").permitAll()
 
 
                         .anyRequest().authenticated()

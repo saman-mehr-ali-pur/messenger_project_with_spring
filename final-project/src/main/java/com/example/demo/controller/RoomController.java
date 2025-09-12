@@ -25,7 +25,13 @@ public class RoomController {
         User user = new User();
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
         user.setUsername(username);
-        return chatRoomService.getByUser(user);
+        java.util.List<ChatRoom> rooms = chatRoomService.getByUser(user);
+        rooms.stream().forEach(item -> {
+            item.setChats(List.of());});
+
+
+
+        return rooms;
     }
 
 

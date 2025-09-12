@@ -3,6 +3,7 @@ package com.example.demo.service;
 
 import com.example.demo.model.ChatRoom;
 import com.example.demo.model.User;
+import com.example.demo.model.enums.RoomType;
 import com.example.demo.repo.ChatRoomRepo;
 import com.example.demo.repo.UserRepo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,4 +34,7 @@ public class ChatRoomService {
         return chatRoomRepo.findByRoomName(name);
     }
 
+    public ChatRoom getByTwoid(Long id1,Long id2){
+        return chatRoomRepo.findByUserId(id1,id2, RoomType.PRIVATE);
+    }
 }

@@ -17,7 +17,7 @@ public interface UserRepo extends JpaRepository<User,Integer> {
 //    List<User> findByUsernameAndPassword(String username,String password);
     Page<User> findAll(Pageable pageable);
     Optional<User> findByUsernameAndPassword(String username,String password);
-    Optional<User> findById(Integer id);
+    Optional<User> findById(Long id);
     User save(User user);
 
 //    List<ChatRoom> findAllChatRooms();
