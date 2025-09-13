@@ -31,7 +31,7 @@ public class MessageService {
         System.out.println("username : "+chat.getUser().getUsername());
         User user = userRepo.findByUsername(chat.getUser().getUsername()).get(0);
         User reciverUser = userRepo.findById(reciverId).orElse(null);
-        ChatRoom chatRoom = chatRoomRepo.findByUserId( user.getId(),reciverId, RoomType.PRIVATE);
+        ChatRoom chatRoom = chatRoomRepo.findByUserId( user.getId(),reciverId, RoomType.PRIVATE).orElse(null);
 //        System.out.println(String.format("chatroom : %d \n owner: %s \n reciver : %d",chatRoom.getId(),user.getUsername(),reciverUser.getUsername()));
         if (chatRoom==null){
             chatRoom= new ChatRoom();

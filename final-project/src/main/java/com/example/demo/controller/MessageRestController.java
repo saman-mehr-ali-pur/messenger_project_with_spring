@@ -10,6 +10,8 @@ import com.example.demo.service.MessageService;
 import com.example.demo.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
@@ -39,7 +41,7 @@ public class MessageRestController {
 
 
     @GetMapping ("/get/{id1}")
-    public ChatRoom getAllChats(@PathVariable("id1") Long id1){
+    public ResponseEntity getAllChats(@PathVariable("id1") Long id1){
 
          java.lang.String  username = (String) SecurityContextHolder.getContext().getAuthentication().getName();
         System.out.println("username" + username);
@@ -57,9 +59,9 @@ public class MessageRestController {
                     item.setSent(false);
                 }
                 item.setRoom(null);});
-            return chatRoom;
+            return ResponseEntity.ok(chatRoom);
         }
 
-        return null;
+        return ResponseEntity.status(HttpStatus.OK).body(new ChatRoom());
     }
 }

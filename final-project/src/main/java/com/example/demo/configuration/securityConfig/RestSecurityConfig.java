@@ -60,8 +60,9 @@ public class RestSecurityConfig {
                         requestMatchers(HttpMethod.OPTIONS,"/user/getUsername").permitAll()
                         .requestMatchers(HttpMethod.GET,"/user/getUsername").permitAll().
                         requestMatchers(HttpMethod.OPTIONS,"/messages-rest/get/**").permitAll().
-                        requestMatchers(HttpMethod.GET,"/messages-rest/get/**").permitAll()
-
+                        requestMatchers(HttpMethod.GET,"/messages-rest/get/**").permitAll().
+                        requestMatchers(HttpMethod.OPTIONS,"/message-rest/create").permitAll()
+                        .requestMatchers(HttpMethod.POST,"/message-rest/create").permitAll()
 
                         .anyRequest().authenticated()
                 )

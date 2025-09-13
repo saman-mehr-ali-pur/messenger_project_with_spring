@@ -24,7 +24,7 @@ public interface ChatRoomRepo extends JpaRepository<ChatRoom,Integer> {
             "  AND m.id IN (:id1, :id2)\n" +
             "GROUP BY cr.id\n" +
             "HAVING COUNT(DISTINCT m.id) = 2\n")
-    ChatRoom findByUserId(@Param("id1") Long id1,@Param("id2") Long id2, @Param("type") RoomType type);
+    Optional<ChatRoom> findByUserId(@Param("id1") Long id1,@Param("id2") Long id2, @Param("type") RoomType type);
 
 
 

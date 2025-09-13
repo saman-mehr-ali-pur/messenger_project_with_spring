@@ -10,7 +10,7 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 @SpringBootApplication
 @EnableJpaRepositories(basePackages = {"com.example.demo.repo"})
 @Slf4j
-public class    FinalProjectApplication {
+public class        FinalProjectApplication {
 
 	private static Logger logger =  LoggerFactory.getLogger(FinalProjectApplication.class);
 	public static void main(String[] args) {

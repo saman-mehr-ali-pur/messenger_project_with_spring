@@ -1,12 +1,14 @@
 package com.example.demo.controller;
 
 
+import com.example.demo.dto.CreateRoomRq;
 import com.example.demo.model.ChatRoom;
 import com.example.demo.model.User;
 import com.example.demo.service.ChatRoomService;
 import org.hibernate.annotations.Array;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.parameters.P;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -32,6 +34,14 @@ public class RoomController {
 
 
         return rooms;
+    }
+
+
+    @PostMapping("/create")
+    public ChatRoom createRoom(@RequestBody CreateRoomRq crq){
+
+        return chatRoomService.create(crq);
+
     }
 
 

@@ -72,7 +72,7 @@ public class MessageController {
         chat = messageService.edit(chat);
         ChangesResp resp = new ChangesResp(chat);
         resp.setChanged(true);
-        String username = SecurityContextHolder.getContext().getAuthentication().getName();
+        String username = node.path("username").asText();
         messagingTemplate.convertAndSend("/topic/chat/"+username,resp);
 
 
